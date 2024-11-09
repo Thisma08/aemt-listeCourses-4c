@@ -8,5 +8,5 @@ import school.listecourses.exercicelistedecourses.infrastructure.dbentities.DbLi
 public interface IListeCoursesRepository extends JpaRepository<DbListeCourses, Long> {
     boolean existsByName(String name);
     boolean existsByNameAndIdIsNot(String name, long id);
-    Iterable<ListeCourses> findByNameContaining(String name);
+    Iterable<DbListeCourses> findByNameContaining(String name);
 }

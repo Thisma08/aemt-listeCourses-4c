@@ -10,6 +10,7 @@ import school.listecourses.exercicelistedecourses.application.listeCourses.queri
 import school.listecourses.exercicelistedecourses.application.listeCourses.queries.getAll.ListeCoursesGetAllOutput;
 import school.listecourses.exercicelistedecourses.application.listeCourses.queries.getAll.ListeCoursesGetAllQuery;
 import school.listecourses.exercicelistedecourses.application.listeCourses.queries.getById.ListeCoursesGetByIdOutput;
+import school.listecourses.exercicelistedecourses.application.listeCourses.queries.searchByName.ListeCoursesSearchByNameOutput;
 
 @RestController
 @RequestMapping("/lists")
@@ -28,5 +29,14 @@ public class ListeCoursesQueryController {
     @GetMapping(value = "/{id}")
     public ListeCoursesGetByIdOutput getById(@PathVariable long id) {
         return listeCoursesQueryProcessor.getById(id);
+    }
+
+    @GetMapping(value = "search/by-name/{name}")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200"),
+            @ApiResponse(responseCode = "400")
+    })
+    public ListeCoursesSearchByNameOutput searchByTitle(@PathVariable() String name) {
+        return listeCoursesQueryProcessor.searchByTitle(name);
     }
 }
