@@ -36,7 +36,7 @@ public class ListeCoursesQueryController {
             @ApiResponse(responseCode = "200"),
             @ApiResponse(responseCode = "400")
     })
-    public ListeCoursesSearchByNameOutput searchByTitle(@PathVariable() String name) {
-        return listeCoursesQueryProcessor.searchByTitle(name);
+    public ListeCoursesSearchByNameOutput searchByName(@PathVariable() String name) {
+        return listeCoursesQueryProcessor.searchByName(name);
     }
 }

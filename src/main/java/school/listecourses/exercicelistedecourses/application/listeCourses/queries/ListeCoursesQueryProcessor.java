@@ -31,7 +31,7 @@ public class ListeCoursesQueryProcessor {
         return listeCoursesGetByIdHandler.handle(id);
     }
 
-    public ListeCoursesSearchByNameOutput searchByTitle(String keyword) {
+    public ListeCoursesSearchByNameOutput searchByName(String keyword) {
         return listeCoursesSearchByNameHandler.handle(keyword);
     }
 }
