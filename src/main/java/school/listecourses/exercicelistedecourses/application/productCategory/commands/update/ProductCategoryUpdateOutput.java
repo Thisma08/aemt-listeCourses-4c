@@ -1,0 +1,14 @@
+package school.listecourses.exercicelistedecourses.application.productCategory.commands.update;
+
+import lombok.Getter;
+
+@Getter
+public class ProductCategoryUpdateOutput {
+    private final boolean success;
+    private final String message;
+
+    public ProductCategoryUpdateOutput(boolean success, String message) {
+        this.success = success;
+        this.message = message;
+    }
+}

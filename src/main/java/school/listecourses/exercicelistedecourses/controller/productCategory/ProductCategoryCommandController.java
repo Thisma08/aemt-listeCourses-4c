@@ -9,6 +9,12 @@ import school.listecourses.exercicelistedecourses.application.productCategory.co
 import school.listecourses.exercicelistedecourses.application.productCategory.commands.create.ProductCategoryCreateOutput;
 import school.listecourses.exercicelistedecourses.application.productCategory.commands.delete.ProductCategoryDeleteCommand;
 import school.listecourses.exercicelistedecourses.application.productCategory.commands.delete.ProductCategoryDeleteOutput;
+import school.listecourses.exercicelistedecourses.application.productCategory.commands.update.ProductCategoryUpdateCommand;
+import school.listecourses.exercicelistedecourses.application.productCategory.commands.update.ProductCategoryUpdateOutput;
+import school.listecourses.exercicelistedecourses.application.productCategory.commands.update.ProductCategoryUpdateRequest;
+import school.listecourses.exercicelistedecourses.application.shoppingList.commands.update.ShoppingListUpdateCommand;
+import school.listecourses.exercicelistedecourses.application.shoppingList.commands.update.ShoppingListUpdateOutput;
+import school.listecourses.exercicelistedecourses.application.shoppingList.commands.update.ShoppingListUpdateRequest;
 
 @RestController
 @RequestMapping("/product-categories")
@@ -24,6 +30,12 @@ public class ProductCategoryCommandController {
     @ApiResponse(responseCode = "201")
     public ProductCategoryCreateOutput create(@RequestBody ProductCategoryCreateCommand command) {
         return productCategoryCommandProcessor.create(command);
+    }
+
+    @PutMapping("/{id}")
+    public ProductCategoryUpdateOutput updateProductCategory(@PathVariable Long id, @RequestBody ProductCategoryUpdateRequest request) {
+        ProductCategoryUpdateCommand command = new ProductCategoryUpdateCommand(id, request.getNewName());
+        return productCategoryCommandProcessor.update(command);
     }
 
     @DeleteMapping("/{id}")

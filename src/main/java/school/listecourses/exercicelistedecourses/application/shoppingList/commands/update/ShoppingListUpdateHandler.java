@@ -14,13 +14,13 @@ public class ShoppingListUpdateHandler implements ICommandHandler<ShoppingListUp
 
     @Override
     public ShoppingListUpdateOutput handle(ShoppingListUpdateCommand command) {
-        var listeCourses = repository.findById(command.getId());
+        var shoppingList = repository.findById(command.getId());
 
-        if(listeCourses.isPresent()) {
-            var existingListeCourses = listeCourses.get();
-            existingListeCourses.setName(command.getNewName());
-            existingListeCourses.setDescription(command.getNewDescription());
-            repository.save(existingListeCourses);
+        if(shoppingList.isPresent()) {
+            var existingShoppingList = shoppingList.get();
+            existingShoppingList.setName(command.getNewName());
+            existingShoppingList.setDescription(command.getNewDescription());
+            repository.save(existingShoppingList);
 
             return new ShoppingListUpdateOutput(true, "Shopping list updated successfully.");
         } else {
