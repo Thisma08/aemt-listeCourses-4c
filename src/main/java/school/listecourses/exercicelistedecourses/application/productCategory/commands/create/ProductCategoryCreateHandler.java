@@ -18,9 +18,9 @@ public class ProductCategoryCreateHandler implements ICommandHandler<ProductCate
     }
 
     @Override
-    public ProductCategoryCreateOutput handle(ProductCategoryCreateCommand input) {
+    public ProductCategoryCreateOutput handle(ProductCategoryCreateCommand command) {
         ProductCategory productCategory = new ProductCategory();
-        productCategory.setName(input.name);
+        productCategory.setName(command.name);
 
         DbProductCategory dbProductCategory = modelMapper.map(productCategory, DbProductCategory.class);
         DbProductCategory dbProductCategoryCreated = repository.save(dbProductCategory);
