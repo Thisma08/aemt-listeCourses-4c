@@ -11,8 +11,8 @@ import lombok.NoArgsConstructor;
 public class DbProduct {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private long id;
     private String name;
     private float price;
-    private int categoryId;
+    private long categoryId;
 }

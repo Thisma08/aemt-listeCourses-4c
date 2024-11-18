@@ -4,5 +4,5 @@ public class ProductCreateOutput {
     public long id;
     public String name;
     public float price;
-    public int categoryId;
+    public long categoryId;
 }

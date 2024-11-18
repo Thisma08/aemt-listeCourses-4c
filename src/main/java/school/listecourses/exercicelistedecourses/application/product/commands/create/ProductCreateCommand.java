@@ -3,5 +3,5 @@ package school.listecourses.exercicelistedecourses.application.product.commands.
 public class ProductCreateCommand {
     public String name;
     public float price;
-    public int categoryId;
+    public long categoryId;
 }

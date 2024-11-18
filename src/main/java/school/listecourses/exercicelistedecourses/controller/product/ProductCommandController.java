@@ -6,8 +6,6 @@ import org.springframework.web.bind.annotation.*;
 import school.listecourses.exercicelistedecourses.application.product.commands.ProductCommandProcessor;
 import school.listecourses.exercicelistedecourses.application.product.commands.create.ProductCreateCommand;
 import school.listecourses.exercicelistedecourses.application.product.commands.create.ProductCreateOutput;
-import school.listecourses.exercicelistedecourses.application.productCategory.commands.create.ProductCategoryCreateCommand;
-import school.listecourses.exercicelistedecourses.application.productCategory.commands.create.ProductCategoryCreateOutput;
 
 @RestController
 @RequestMapping("/products")
