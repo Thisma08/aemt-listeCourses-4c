@@ -1,6 +1,8 @@
 package school.listecourses.exercicelistedecourses.application.shoppingList.commands;
 
 import org.springframework.stereotype.Service;
+import school.listecourses.exercicelistedecourses.application.shoppingList.commands.associateProduct.ShoppingListAssociateProductCommand;
+import school.listecourses.exercicelistedecourses.application.shoppingList.commands.associateProduct.ShoppingListAssociateProductOutput;
 import school.listecourses.exercicelistedecourses.application.shoppingList.commands.create.ShoppingListCreateCommand;
 import school.listecourses.exercicelistedecourses.application.shoppingList.commands.create.ShoppingListCreateOutput;
 import school.listecourses.exercicelistedecourses.application.shoppingList.commands.delete.ShoppingListDeleteCommand;
@@ -11,27 +13,33 @@ import school.listecourses.exercicelistedecourses.application.utils.ICommandHand
 
 @Service
 public class ShoppingListCommandProcessor {
-    private final ICommandHandler<ShoppingListUpdateCommand, ShoppingListUpdateOutput> updateListeCoursesHandler;
-    private final ICommandHandler<ShoppingListCreateCommand, ShoppingListCreateOutput> createListeCoursesHandler;
-    private final ICommandHandler<ShoppingListDeleteCommand, ShoppingListDeleteOutput> deleteListeCoursesHandler;
+    private final ICommandHandler<ShoppingListUpdateCommand, ShoppingListUpdateOutput> updateShoppingListHandler;
+    private final ICommandHandler<ShoppingListCreateCommand, ShoppingListCreateOutput> createShoppingListHandler;
+    private final ICommandHandler<ShoppingListDeleteCommand, ShoppingListDeleteOutput> deleteShoppingListHandler;
+    private final ICommandHandler<ShoppingListAssociateProductCommand, ShoppingListAssociateProductOutput> associateProductHandler;
 
 
 
-    public ShoppingListCommandProcessor(ICommandHandler<ShoppingListUpdateCommand, ShoppingListUpdateOutput> updateListeCoursesHandler, ICommandHandler<ShoppingListCreateCommand, ShoppingListCreateOutput> createListeCoursesHandler, ICommandHandler<ShoppingListDeleteCommand, ShoppingListDeleteOutput> deleteListeCoursesHandler) {
-        this.updateListeCoursesHandler = updateListeCoursesHandler;
-        this.createListeCoursesHandler = createListeCoursesHandler;
-        this.deleteListeCoursesHandler = deleteListeCoursesHandler;
+    public ShoppingListCommandProcessor(ICommandHandler<ShoppingListUpdateCommand, ShoppingListUpdateOutput> updateShoppingListHandler, ICommandHandler<ShoppingListCreateCommand, ShoppingListCreateOutput> createShoppingListHandler, ICommandHandler<ShoppingListDeleteCommand, ShoppingListDeleteOutput> deleteShoppingListHandler, ICommandHandler<ShoppingListAssociateProductCommand, ShoppingListAssociateProductOutput> associateProductHandler) {
+        this.updateShoppingListHandler = updateShoppingListHandler;
+        this.createShoppingListHandler = createShoppingListHandler;
+        this.deleteShoppingListHandler = deleteShoppingListHandler;
+        this.associateProductHandler = associateProductHandler;
     }
 
     public ShoppingListUpdateOutput update(ShoppingListUpdateCommand command) {
-        return updateListeCoursesHandler.handle(command);
+        return updateShoppingListHandler.handle(command);
     }
 
     public ShoppingListCreateOutput create(ShoppingListCreateCommand command) {
-        return createListeCoursesHandler.handle(command);
+        return createShoppingListHandler.handle(command);
     }
 
-    public ShoppingListDeleteOutput delete (ShoppingListDeleteCommand command) {
-        return deleteListeCoursesHandler.handle(command);
+    public ShoppingListDeleteOutput delete(ShoppingListDeleteCommand command) {
+        return deleteShoppingListHandler.handle(command);
+    }
+
+    public ShoppingListAssociateProductOutput associateProduct(ShoppingListAssociateProductCommand command) {
+        return associateProductHandler.handle(command);
     }
 }

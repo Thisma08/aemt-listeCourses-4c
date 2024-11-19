@@ -21,10 +21,10 @@ public class ShoppingListCreateHandler implements ICommandHandler<ShoppingListCr
     }
 
     @Override
-    public ShoppingListCreateOutput handle(ShoppingListCreateCommand input) {
+    public ShoppingListCreateOutput handle(ShoppingListCreateCommand command) {
         ShoppingList shoppingList = new ShoppingList();
-        shoppingList.setName(input.name);
-        shoppingList.setDescription(input.description);
+        shoppingList.setName(command.name);
+        shoppingList.setDescription(command.description);
         ZonedDateTime currentDateTime = ZonedDateTime.now();
         Date fixedDate = Date.from(currentDateTime.toInstant());
         shoppingList.setCreatedAt(fixedDate);

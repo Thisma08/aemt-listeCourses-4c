@@ -5,6 +5,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import school.listecourses.exercicelistedecourses.application.shoppingList.commands.ShoppingListCommandProcessor;
+import school.listecourses.exercicelistedecourses.application.shoppingList.commands.associateProduct.ShoppingListAssociateProductCommand;
+import school.listecourses.exercicelistedecourses.application.shoppingList.commands.associateProduct.ShoppingListAssociateProductOutput;
 import school.listecourses.exercicelistedecourses.application.shoppingList.commands.create.ShoppingListCreateCommand;
 import school.listecourses.exercicelistedecourses.application.shoppingList.commands.create.ShoppingListCreateOutput;
 import school.listecourses.exercicelistedecourses.application.shoppingList.commands.delete.ShoppingListDeleteCommand;
@@ -34,6 +36,15 @@ public class ShoppingListCommandController {
     public ShoppingListCreateOutput create(@RequestBody ShoppingListCreateCommand command) {
         return shoppingListCommandProcessor.create(command);
     }
+
+    @PostMapping("/{id}/products")
+    @ResponseStatus(HttpStatus.CREATED)
+    @ApiResponse(responseCode = "201")
+    public ShoppingListAssociateProductOutput associateProduct(@PathVariable Long id, @RequestParam long productId) {
+        ShoppingListAssociateProductCommand command = new ShoppingListAssociateProductCommand(id, productId);
+        return shoppingListCommandProcessor.associateProduct(command);
+    }
+
 
     @DeleteMapping("/{id}")
     public ResponseEntity<ShoppingListDeleteOutput> delete(@PathVariable Long id) {
