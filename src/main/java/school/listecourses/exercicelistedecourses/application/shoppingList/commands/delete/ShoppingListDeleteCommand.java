@@ -4,9 +4,9 @@ import lombok.Getter;
 
 @Getter
 public class ShoppingListDeleteCommand {
-    private final Long id;
+    private final long id;
 
-    public ShoppingListDeleteCommand(Long id) {
+    public ShoppingListDeleteCommand(long id) {
         this.id = id;
     }
 }

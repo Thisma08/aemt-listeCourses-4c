@@ -14,7 +14,7 @@ public class ShoppingListDeleteHandler implements ICommandHandler<ShoppingListDe
 
     @Override
     public ShoppingListDeleteOutput handle(ShoppingListDeleteCommand command) {
-        Long id = command.getId();
+        long id = command.getId();
         if(!repository.existsById(id)) {
             return new ShoppingListDeleteOutput(false, "List not found.");
         } else {

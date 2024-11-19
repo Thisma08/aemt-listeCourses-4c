@@ -12,8 +12,6 @@ import school.listecourses.exercicelistedecourses.application.product.commands.d
 import school.listecourses.exercicelistedecourses.application.product.commands.update.ProductUpdateCommand;
 import school.listecourses.exercicelistedecourses.application.product.commands.update.ProductUpdateOutput;
 import school.listecourses.exercicelistedecourses.application.product.commands.update.ProductUpdateRequest;
-import school.listecourses.exercicelistedecourses.application.productCategory.commands.delete.ProductCategoryDeleteCommand;
-import school.listecourses.exercicelistedecourses.application.productCategory.commands.delete.ProductCategoryDeleteOutput;
 
 @RestController
 @RequestMapping("/products")

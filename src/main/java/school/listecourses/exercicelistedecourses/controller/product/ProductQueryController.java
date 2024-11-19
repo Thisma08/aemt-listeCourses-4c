@@ -6,9 +6,6 @@ import org.springframework.web.bind.annotation.RestController;
 import school.listecourses.exercicelistedecourses.application.product.queries.ProductQueryProcessor;
 import school.listecourses.exercicelistedecourses.application.product.queries.getAll.ProductGetAllOutput;
 import school.listecourses.exercicelistedecourses.application.product.queries.getAll.ProductGetAllQuery;
-import school.listecourses.exercicelistedecourses.application.productCategory.queries.ProductCategoryQueryProcessor;
-import school.listecourses.exercicelistedecourses.application.productCategory.queries.getAll.ProductCategoryGetAllOutput;
-import school.listecourses.exercicelistedecourses.application.productCategory.queries.getAll.ProductCategoryGetAllQuery;
 
 @RestController
 @RequestMapping("/products")

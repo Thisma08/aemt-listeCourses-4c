@@ -5,7 +5,8 @@ import lombok.NoArgsConstructor;
 
 @Data
 @NoArgsConstructor
-public class ProductCategory {
+public class Store {
     private long id;
-    private String name;
+    public String name;
+    public String logoUrl;
 }
