@@ -4,9 +4,9 @@ import lombok.Getter;
 
 @Getter
 public class ProductCategoryDeleteCommand {
-    private final Long id;
+    private final long id;
 
-    public ProductCategoryDeleteCommand(Long id) {
+    public ProductCategoryDeleteCommand(long id) {
         this.id = id;
     }
 }

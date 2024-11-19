@@ -1,7 +1,6 @@
 package school.listecourses.exercicelistedecourses.application.productCategory.commands.delete;
 
 import org.springframework.stereotype.Service;
-import school.listecourses.exercicelistedecourses.application.shoppingList.commands.delete.ShoppingListDeleteOutput;
 import school.listecourses.exercicelistedecourses.application.utils.ICommandHandler;
 import school.listecourses.exercicelistedecourses.domain.interfaces.IProductCategoryRepository;
 
@@ -15,7 +14,7 @@ public class ProductCategoryDeleteHandler implements ICommandHandler<ProductCate
 
     @Override
     public ProductCategoryDeleteOutput handle(ProductCategoryDeleteCommand command) {
-        Long id = command.getId();
+        long id = command.getId();
         if(!repository.existsById(id)) {
             return new ProductCategoryDeleteOutput(false, "Product category not found.");
         } else {
