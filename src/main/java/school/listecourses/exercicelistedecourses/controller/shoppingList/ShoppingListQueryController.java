@@ -2,10 +2,8 @@ package school.listecourses.exercicelistedecourses.controller.shoppingList;
 
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import school.listecourses.exercicelistedecourses.application.shoppingList.commands.viewProducts.ShoppingListViewProductsHandler;
 import school.listecourses.exercicelistedecourses.application.shoppingList.queries.ShoppingListQueryProcessor;
 import school.listecourses.exercicelistedecourses.application.shoppingList.queries.getAll.ShoppingListGetAllOutput;
 import school.listecourses.exercicelistedecourses.application.shoppingList.queries.getAll.ShoppingListGetAllQuery;
@@ -16,9 +14,11 @@ import school.listecourses.exercicelistedecourses.application.shoppingList.queri
 @RequestMapping("/shoppingLists")
 public class ShoppingListQueryController {
     private final ShoppingListQueryProcessor shoppingListQueryProcessor;
+    private final ShoppingListViewProductsHandler shoppingListViewProductsHandler;
 
-    public ShoppingListQueryController(ShoppingListQueryProcessor shoppingListQueryProcessor) {
+    public ShoppingListQueryController(ShoppingListQueryProcessor shoppingListQueryProcessor, ShoppingListViewProductsHandler shoppingListViewProductsHandler) {
         this.shoppingListQueryProcessor = shoppingListQueryProcessor;
+        this.shoppingListViewProductsHandler = shoppingListViewProductsHandler;
     }
 
     @GetMapping
@@ -38,5 +38,16 @@ public class ShoppingListQueryController {
     })
     public ShoppingListSearchByNameOutput searchByName(@PathVariable() String name) {
         return shoppingListQueryProcessor.searchByName(name);
+    }
+
+    @GetMapping("/{id}/products")
+    public Object getProducts(@PathVariable Long id, @RequestParam String view) {
+        if ("flat".equalsIgnoreCase(view)) {
+            return shoppingListViewProductsHandler.handleFlat(id);
+        } else if ("complex".equalsIgnoreCase(view)) {
+            return shoppingListViewProductsHandler.handleComplex(id);
+        } else {
+            throw new IllegalArgumentException("Invalid view type. Use 'flat' or 'complex'.");
+        }
     }
 }
