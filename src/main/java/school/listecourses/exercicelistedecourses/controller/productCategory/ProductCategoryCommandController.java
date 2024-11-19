@@ -33,13 +33,13 @@ public class ProductCategoryCommandController {
     }
 
     @PutMapping("/{id}")
-    public ProductCategoryUpdateOutput updateProductCategory(@PathVariable Long id, @RequestBody ProductCategoryUpdateRequest request) {
+    public ProductCategoryUpdateOutput updateProductCategory(@PathVariable long id, @RequestBody ProductCategoryUpdateRequest request) {
         ProductCategoryUpdateCommand command = new ProductCategoryUpdateCommand(id, request.getNewName());
         return productCategoryCommandProcessor.update(command);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<ProductCategoryDeleteOutput> delete(@PathVariable Long id) {
+    public ResponseEntity<ProductCategoryDeleteOutput> delete(@PathVariable long id) {
         ProductCategoryDeleteCommand command = new ProductCategoryDeleteCommand(id);
         ProductCategoryDeleteOutput output = productCategoryCommandProcessor.delete(command);
 
