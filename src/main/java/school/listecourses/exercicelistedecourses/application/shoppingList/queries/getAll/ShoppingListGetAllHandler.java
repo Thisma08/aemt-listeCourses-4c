@@ -5,6 +5,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import school.listecourses.exercicelistedecourses.application.utils.IQueryHandler;
+import school.listecourses.exercicelistedecourses.controller.shoppingList.exceptions.InvalidPageSizeException;
+import school.listecourses.exercicelistedecourses.controller.shoppingList.exceptions.NegativePageNumberException;
 import school.listecourses.exercicelistedecourses.domain.interfaces.IShoppingListRepository;
 import school.listecourses.exercicelistedecourses.infrastructure.dbentities.DbShoppingList;
 
@@ -21,6 +23,12 @@ public class ShoppingListGetAllHandler implements IQueryHandler<ShoppingListGetA
 
     @Override
     public ShoppingListGetAllOutput handle(ShoppingListGetAllQuery query) {
+        if (query.page < 0) {
+            throw new NegativePageNumberException();
+        }
+        if(query.pageSize != 10 && query.pageSize != 20) {
+            throw new InvalidPageSizeException();
+        }
         Page<DbShoppingList> dbList = repository.findAll(PageRequest.of(query.page, query.pageSize));
         ShoppingListGetAllOutput output = new ShoppingListGetAllOutput();
 
