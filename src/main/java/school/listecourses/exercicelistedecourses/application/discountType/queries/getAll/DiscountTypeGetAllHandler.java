@@ -5,6 +5,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import school.listecourses.exercicelistedecourses.application.utils.ICommandHandler;
+import school.listecourses.exercicelistedecourses.controller.discountType.exceptions.InvalidPageSizeException;
+import school.listecourses.exercicelistedecourses.controller.discountType.exceptions.NegativePageNumberException;
 import school.listecourses.exercicelistedecourses.domain.interfaces.IDiscountTypeRepository;
 import school.listecourses.exercicelistedecourses.infrastructure.dbentities.DbDiscountType;
 
@@ -20,6 +22,12 @@ public class DiscountTypeGetAllHandler implements ICommandHandler<DiscountTypeGe
 
     @Override
     public DiscountTypeGetAllOutput handle(DiscountTypeGetAllQuery query) {
+        if (query.page < 0) {
+            throw new NegativePageNumberException();
+        }
+        if(query.pageSize != 10 && query.pageSize != 20) {
+            throw new InvalidPageSizeException();
+        }
         Page<DbDiscountType> dbDiscountTypes = repository.findAll(PageRequest.of(query.page, query.pageSize));
         DiscountTypeGetAllOutput output = new DiscountTypeGetAllOutput();
 

@@ -2,6 +2,6 @@ package school.listecourses.exercicelistedecourses.controller.shoppingList.excep
 
 public class ShoppingListNotFoundException extends RuntimeException {
     public ShoppingListNotFoundException(long id) {
-        super("ListeCourse with id " + id + " not found");
+        super("Shopping list with id " + id + " not found");
     }
 }

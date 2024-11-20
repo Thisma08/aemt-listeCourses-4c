@@ -3,6 +3,7 @@ package school.listecourses.exercicelistedecourses.application.discountType.comm
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 import school.listecourses.exercicelistedecourses.application.utils.ICommandHandler;
+import school.listecourses.exercicelistedecourses.controller.discountType.exceptions.DuplicateDiscountTypeException;
 import school.listecourses.exercicelistedecourses.domain.DiscountType;
 import school.listecourses.exercicelistedecourses.domain.interfaces.IDiscountTypeRepository;
 import school.listecourses.exercicelistedecourses.infrastructure.dbentities.DbDiscountType;
@@ -19,14 +20,18 @@ public class DiscountTypeCreateHandler implements ICommandHandler<DiscountTypeCr
 
     @Override
     public DiscountTypeCreateOutput handle(DiscountTypeCreateCommand command) {
-        DiscountType discountType = new DiscountType();
-        discountType.setDescription(command.description);
-        discountType.setBackgroundColor(command.backgroundColor);
-        discountType.setTextColor(command.textColor);
+        if(repository.existsByDescription(command.getDescription())) {
+            throw new DuplicateDiscountTypeException(command.getDescription());
+        } else {
+            DiscountType discountType = new DiscountType();
+            discountType.setDescription(command.description);
+            discountType.setBackgroundColor(command.backgroundColor);
+            discountType.setTextColor(command.textColor);
 
-        DbDiscountType dbDiscountType = modelMapper.map(discountType, DbDiscountType.class);
-        DbDiscountType dbDiscountTypeCreated = repository.save(dbDiscountType);
+            DbDiscountType dbDiscountType = modelMapper.map(discountType, DbDiscountType.class);
+            DbDiscountType dbDiscountTypeCreated = repository.save(dbDiscountType);
 
-        return modelMapper.map(dbDiscountTypeCreated, DiscountTypeCreateOutput.class);
+            return modelMapper.map(dbDiscountTypeCreated, DiscountTypeCreateOutput.class);
+        }
     }
 }

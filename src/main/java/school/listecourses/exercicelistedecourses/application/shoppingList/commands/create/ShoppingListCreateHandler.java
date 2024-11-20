@@ -3,6 +3,7 @@ package school.listecourses.exercicelistedecourses.application.shoppingList.comm
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 import school.listecourses.exercicelistedecourses.application.utils.ICommandHandler;
+import school.listecourses.exercicelistedecourses.controller.shoppingList.exceptions.DuplicateShoppingListException;
 import school.listecourses.exercicelistedecourses.domain.ShoppingList;
 import school.listecourses.exercicelistedecourses.domain.interfaces.IShoppingListRepository;
 import school.listecourses.exercicelistedecourses.infrastructure.dbentities.DbShoppingList;
@@ -22,16 +23,20 @@ public class ShoppingListCreateHandler implements ICommandHandler<ShoppingListCr
 
     @Override
     public ShoppingListCreateOutput handle(ShoppingListCreateCommand command) {
-        ShoppingList shoppingList = new ShoppingList();
-        shoppingList.setName(command.name);
-        shoppingList.setDescription(command.description);
-        ZonedDateTime currentDateTime = ZonedDateTime.now();
-        Date fixedDate = Date.from(currentDateTime.toInstant());
-        shoppingList.setCreatedAt(fixedDate);
+        if(repository.existsByName(command.getName())) {
+            throw new DuplicateShoppingListException(command.getName());
+        } else {
+            ShoppingList shoppingList = new ShoppingList();
+            shoppingList.setName(command.name);
+            shoppingList.setDescription(command.description);
+            ZonedDateTime currentDateTime = ZonedDateTime.now();
+            Date fixedDate = Date.from(currentDateTime.toInstant());
+            shoppingList.setCreatedAt(fixedDate);
 
-        DbShoppingList dbShoppingList = modelMapper.map(shoppingList, DbShoppingList.class);
-        DbShoppingList dbShoppingListCreated = repository.save(dbShoppingList);
+            DbShoppingList dbShoppingList = modelMapper.map(shoppingList, DbShoppingList.class);
+            DbShoppingList dbShoppingListCreated = repository.save(dbShoppingList);
 
-        return modelMapper.map(dbShoppingListCreated, ShoppingListCreateOutput.class);
+            return modelMapper.map(dbShoppingListCreated, ShoppingListCreateOutput.class);
+        }
     }
 }

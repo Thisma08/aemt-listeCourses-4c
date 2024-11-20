@@ -5,6 +5,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import school.listecourses.exercicelistedecourses.application.utils.IQueryHandler;
+import school.listecourses.exercicelistedecourses.controller.productCategory.exceptions.InvalidPageSizeException;
+import school.listecourses.exercicelistedecourses.controller.productCategory.exceptions.NegativePageNumberException;
 import school.listecourses.exercicelistedecourses.domain.interfaces.IProductCategoryRepository;
 import school.listecourses.exercicelistedecourses.infrastructure.dbentities.DbProductCategory;
 
@@ -20,6 +22,12 @@ public class ProductCategoryGetAllHandler implements IQueryHandler<ProductCatego
 
     @Override
     public ProductCategoryGetAllOutput handle(ProductCategoryGetAllQuery query) {
+        if (query.page < 0) {
+            throw new NegativePageNumberException();
+        }
+        if(query.pageSize != 10 && query.pageSize != 20) {
+            throw new InvalidPageSizeException();
+        }
         Page<DbProductCategory> dbProductCategories = repository.findAll(PageRequest.of(query.page, query.pageSize));
         ProductCategoryGetAllOutput output = new ProductCategoryGetAllOutput();
 

@@ -3,6 +3,7 @@ package school.listecourses.exercicelistedecourses.application.product.commands.
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 import school.listecourses.exercicelistedecourses.application.utils.ICommandHandler;
+import school.listecourses.exercicelistedecourses.controller.product.exceptions.DuplicateProductException;
 import school.listecourses.exercicelistedecourses.domain.Product;
 import school.listecourses.exercicelistedecourses.domain.interfaces.IProductRepository;
 import school.listecourses.exercicelistedecourses.infrastructure.dbentities.DbProduct;
@@ -17,17 +18,20 @@ public class ProductCreateHandler implements ICommandHandler<ProductCreateComman
         this.modelMapper = modelMapper;
     }
 
-
     @Override
     public ProductCreateOutput handle(ProductCreateCommand command) {
-        Product product = new Product();
-        product.setName(command.name);
-        product.setPrice(command.price);
-        product.setCategoryId(command.categoryId);
+        if(repository.existsByName(command.getName())) {
+            throw new DuplicateProductException(command.getName());
+        } else {
+            Product product = new Product();
+            product.setName(command.name);
+            product.setPrice(command.price);
+            product.setCategoryId(command.categoryId);
 
-        DbProduct dbProduct = modelMapper.map(product, DbProduct.class);
-        DbProduct dbProductCreated = repository.save(dbProduct);
+            DbProduct dbProduct = modelMapper.map(product, DbProduct.class);
+            DbProduct dbProductCreated = repository.save(dbProduct);
 
-        return modelMapper.map(dbProductCreated, ProductCreateOutput.class);
+            return modelMapper.map(dbProductCreated, ProductCreateOutput.class);
+        }
     }
 }

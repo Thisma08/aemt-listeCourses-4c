@@ -3,6 +3,7 @@ package school.listecourses.exercicelistedecourses.application.store.commands.cr
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 import school.listecourses.exercicelistedecourses.application.utils.ICommandHandler;
+import school.listecourses.exercicelistedecourses.controller.store.exceptions.DuplicateStoreException;
 import school.listecourses.exercicelistedecourses.domain.Store;
 import school.listecourses.exercicelistedecourses.domain.interfaces.IStoreRepository;
 import school.listecourses.exercicelistedecourses.infrastructure.dbentities.DbStore;
@@ -19,13 +20,17 @@ public class StoreCreateHandler implements ICommandHandler<StoreCreateCommand, S
 
     @Override
     public StoreCreateOutput handle(StoreCreateCommand command) {
-        Store store = new Store();
-        store.setName(command.name);
-        store.setLogoUrl(command.logoUrl);
+        if(repository.existsByName(command.getName())) {
+            throw new DuplicateStoreException(command.getName());
+        } else {
+            Store store = new Store();
+            store.setName(command.name);
+            store.setLogoUrl(command.logoUrl);
 
-        DbStore dbStore = modelMapper.map(store, DbStore.class);
-        DbStore dbStoreCreated = repository.save(dbStore);
+            DbStore dbStore = modelMapper.map(store, DbStore.class);
+            DbStore dbStoreCreated = repository.save(dbStore);
 
-        return modelMapper.map(dbStoreCreated, StoreCreateOutput.class);
+            return modelMapper.map(dbStoreCreated, StoreCreateOutput.class);
+        }
     }
 }
